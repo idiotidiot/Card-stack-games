@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-WKJQ5QHQTJ');
+</script>
+
 		<title>Flash Player</title>
 		<style>
 			body {
@@ -146,7 +156,7 @@
 		</style>
 		<script>
 			var mainarea, ffd, upload, legacy, rplayer, useLegacy;
-			var cdn = "https://cdn.jsdelivr.net/gh/BinBashBanana/gstore/";
+			var cdn = "/play/flash/swf/";
 			
 			// query string into object
 			var search = decodeURIComponent(window.location.search).substring(1).split("&");

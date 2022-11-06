@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ZOMBIE HILL RACING - unblocked games at school</title>
+<link rel="stylesheet"href="/play/zombie-hill-racer/gameloader.css"/>
+<script src="/play/zombie-hill-racer/gameloader.js"></script>
+<script src="/play/zombie-hill-racer/v2.js"></script>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript">
+            var player;
+            var sdk;
+            var payments = null;
+
+            YaGames.init({
+                adv: {
+                    onAdvClose: wasShown=>{
+                        console.info('adv closed!');
+                    }
+                }
+            }).then(ysdk=>{
+                sdk = ysdk;
+                sdk.adv.showFullscreenAdv({
+                    callbacks: {}
+                });
+            }
+            );
+
+            function auth() {
+                sdk.auth.openAuthDialog().then(()=>{
+                    // Игрок успешно авторизован, теперь объект Player будет инициализирован.
+                    initPlayer();
+                    console.log('auth ok');
+                }
+                ).catch(()=>{
+                    // Игрок не авторизован.
+                    console.log('auth failed');
+                }
+                );
+            }
+
+            function initPlayer() {
+                return sdk.getPlayer().then(_player=>{
+                    player = _player;
+                }
+                ).catch(err=>{// Если игрок не авторизован, выбрасывает исключение USER_NOT_AUTHORIZED.
+                }
+                );
+            }
+
+            function getUserData() {
+                if (initPlayer) {
+                    var data = {
+                        "id": player.getID(),
+                        "name": player.getName(),
+                        "avatarUrlSmall": player.getPhoto('small'),
+                        "avatarUrlMedium": player.getPhoto('medium'),
+                        "avatarUrlLarge": player.getPhoto('large')
+                    };
+					var unityInstance = window.GameInit.getUnityInstance();
+                    unityInstance && unityInstance.SendMessage('YandexSDK', 'StoreUserData', JSON.stringify(data));
+                }
+            }
+
+            function showFullscrenAd() {
+                sdk.adv.showFullscreenAdv({
+                    callbacks: {
+                        onClose: function(wasShown) {
+						var unityInstance = window.GameInit.getUnityInstance();
+                            unityInstance && unityInstance.SendMessage('YandexSDK', 'OnInterstitialShown');
+                        },
+                        onError: function(error) {
+						var unityInstance = window.GameInit.getUnityInstance();
+                            unityInstance && unityInstance.SendMessage('YandexSDK', 'OnInterstitialFailed', error);
+                        }
+                    }
+                })
+            }
+
+            function showRewardedAd(id) {
+                sdk.adv.showRewardedVideo({
+                    callbacks: {
+                        onOpen: ()=>{
+						var unityInstance = window.GameInit.getUnityInstance();
+                            unityInstance && unityInstance.SendMessage('YandexSDK', 'OnRewardedOpen', id);
+                            console.log('Video ad open. Id: ' + id);
+                        }
+                        ,
+                        onRewarded: ()=>{
+						var unityInstance = window.GameInit.getUnityInstance();
+                            unityInstance && unityInstance.SendMessage('YandexSDK', 'OnRewarded', id);
+                            console.log('Rewarded! Id: ' + id);
+                        }
+                        ,
+                        onClose: ()=>{
+						var unityInstance = window.GameInit.getUnityInstance();
+                            unityInstance && unityInstance.SendMessage('YandexSDK', 'OnRewardedClose', id);
+                            console.log('Video ad closed. Id: ' + id);
+                        }
+                        ,
+                        onError: (e)=>{
+                            var data = {
+                                "id": id,
+                                "error": error
+                            };
+							var unityInstance = window.GameInit.getUnityInstance();
+                            unityInstance && unityInstance.SendMessage('YandexSDK', 'OnRewardedError', JSON.stringify(data));
+                            console.log('Error while open video ad:', e);
+                        }
+                    }
+                })
+            }
+
+            function initPayments() {
+                sdk.getPayments().then(_payments=>{
+                    // Покупки доступны.
+                    payments = _payments;
+                }
+                ).catch(err=>{}
+                )
+            }
+
+            function buy(id) {
+                payments.purchase(id).then(purchase=>{
+                    // Покупка успешно совершена!
+					var unityInstance = window.GameInit.getUnityInstance();
+                    unityInstance && unityInstance.SendMessage('YandexSDK', 'OnPurchaseSuccess', id);
+                }
+                ).catch(err=>{
+                    // Покупка не удалась: в консоли разработчика не добавлен товар с таким id,
+                    // пользователь не авторизовался, передумал и закрыл окно оплаты,
+                    // истекло отведенное на покупку время, не хватило денег и т. д.
+					var unityInstance = window.GameInit.getUnityInstance();
+                    unityInstance && unityInstance.SendMessage('YandexSDK', 'OnPurchaseFailed', err);
+                }
+                )
+            }
+
+            window.onbeforeunload = function(e) {
+                console.log("Calling OnClose from Browser!");
+				var unityInstance = window.GameInit.getUnityInstance();
+                unityInstance && unityInstance.SendMessage("YandexSDK", "OnClose");
+
+                var dialogText = "You game has been saved!  Would you like to continue unloading the page?";
+                e.returnValue = dialogText;
+                return dialogText;
+            }
+            ;
+        </script>
+</head>
+<body>
+<script type="text/javascript">
+      var options = {
+        author: "Vseigru",        
+		logo: "logo.jpg",
+        gameName: "Зомби Хил Рейсинг",
+		gameNameEu: "Zombie Hill Racing",
+        gameUrl: "36181",
+        moreLink: ("https://1player.games"),
+        allowFullscreen: true,
+        locale: "ru_RU",
+        loader: "5.6.x",
+        loaderOptions: {"moduleJsonUrl": "Zombie Hill Racing Yandex.json", "unityLoaderUrl": "UnityLoader.js"},
+      };
+      GameInit.load(options);
+    </script>
+</body>
+</html>
+
