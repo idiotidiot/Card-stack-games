@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Chat app</title>
+        <meta charset="UTF-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../styles/style.css" id="style">
+        <link rel="shortcut icon" href="https://th.bing.com/th/id/OIP.nhzM6dHeM1jnOKJtDiH6KQHaGr?w=195&h=180&c=7&o=5&pid=1.7">
+        <link href='https://css.gg/css' rel='stylesheet'>
+    </head>
+    <!--NAVBAR-->
+ <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    
+    body {
+      font-family: Arial, Tahoma, Serif;
+      color: rgb(141, 0, 206);
+    }
+    
+    nav {
+      display: flex;
+      justify-content:space-between; 
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgb(255, 255, 255); 
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none; 
+    }
+    
+    nav li {
+      padding-left: 1rem; 
+    }
+    
+    nav a {
+      text-decoration: none;
+      color: rgb(65, 65, 65)
+    }
+    
+     /* 
+      Extra small devices (phones, 600px and down) 
+    */
+    @media only screen and (max-width: 600px) {
+      nav {
+        flex-direction: column;
+      }
+      nav ul {
+        flex-direction: column;
+        padding-top: 0.5rem;
+      }
+      nav li {
+        padding: 0.5rem 0;
+      }
+    }
+    </style>
+    
+
+    <nav>
+        <h2>
+          I always come back..
+        </h2>
+        <ul>
+            
+          <li><a href="/./">Home</a></li>
+          <li><a href="/apps.html">Apps</a></li>
+          <li><a href="/chat/Chat/public/views/index.html">Chat</a></li>
+        </ul>
+      </nav>
+      
+
+    <body>
+
+        <div id="mySidenav" class="sidenav">
+            <p id="user-close-button" class="closebtn" onclick="closeNav()">&times;</p>
+        </div>
+
+        <span onclick="openNav()" id="users-button"><i class="gg-user"></i></span>
+
+        <div id="main">
+            <ul id="messages"></ul>
+
+            <form id="input" action="">
+                <input id="m" autocomplete="off" placeholder="Enter message"> 
+				<button style="width: 20px; height: 20px;" type="submit"></button> 
+            </form>
+
+            <script src="/socket.io/socket.io.js"></script>
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+            <script src="../scripts/script.js"></script>
+        </div>
+
+    </body>
+</html>
