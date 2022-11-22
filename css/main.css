@@ -13,6 +13,14 @@ body {
     color: white;
 }
 
+#subtitle {
+  font-size: 20px;
+  color: rgb(255, 251, 37);
+  font-family: 'Open sans';
+  text-align: center;
+
+}
+
 #Announce {
     font-size: 25px;
     font-weight: 900;
@@ -111,11 +119,11 @@ body {
 
 #glist h2 {
 	display: block;
-	color: #fff;
+	color: rgb(0, 0, 0);
 	font: 18px;
-	border: 1px solid #000;
+	border: 1px solid rgb(255, 255, 255);
 	margin: -1px 0 0 0;
-	background-color: #000;
+	background-color: rgb(255, 255, 255);
 	padding: 12px;
 	font-weight: bold;
 	user-select: none;
@@ -124,10 +132,10 @@ body {
 #glist a {
 	display: block;
 	text-decoration: inherit;
-	color: #fff;
-	border: 1px solid #000;
+	color: rgb(0, 0, 0);
+	border: 1px solid rgb(255, 255, 255);
 	margin-top: -2px;
-	background-color: #000;
+	background-color: rgb(255, 255, 255);
 	padding: 12px;
 	transition: 0.2s ease;
   font-family: 'Quicksand', sans-serif;
@@ -154,16 +162,16 @@ body {
 input {
     font-family: 'Quicksand', sans-serif;
     text-align: center;
-    color: #fff;
+    color: rgb(0, 0, 0);
     border: none;
     border-radius: 12px;
     padding: 6px;
     width: 245px;
-    background-color: #000;
+    background-color: rgb(255, 255, 255);
 }
 
 ::placeholder {
-    color: #fff;
+    color: rgb(0, 0, 0);
     font-weight: bold;
 }
 
@@ -195,7 +203,7 @@ input {
 }
 a {
   text-decoration:none;
-  color: #fff;
+  color: rgb(0, 0, 0);
 }
 .header-link {
   color: #fff;
